@@ -18,10 +18,56 @@ from collections import OrderedDict
 import math
 import importlib
 from functools import partial
-
+import torchvision.models as models
 ########################################
 # Defined the model architectures
 ########################################
+
+# add my customized model
+def admm_cifar_model_large(): 
+    model = nn.Sequential(
+        nn.Conv2d(3, 32, 3, stride=1, padding=1),
+        nn.ReLU(),
+        nn.Conv2d(32, 32, 4, stride=2, padding=1),
+        nn.ReLU(),
+        nn.Conv2d(32, 64, 3, stride=1, padding=1),
+        nn.ReLU(),
+        nn.Conv2d(64, 64, 4, stride=2, padding=1),
+        nn.ReLU(),
+        Flatten(),
+        nn.Linear(64*8*8,512),
+        nn.ReLU(),
+        nn.Linear(512,512),
+        nn.ReLU(),
+        nn.Linear(512,10)
+    )
+    return model
+    
+
+def cifar_resnet18():
+    resnet18 = models.resnet18()
+    resnet18.maxpool = nn.Conv2d(64, 64, kernel_size=1, stride=2, padding=0, bias=False)
+    resnet18.avgpool = Flatten()
+    old_fc = resnet18.fc
+    weight, bias = old_fc.weight, old_fc.bias
+    new_fc = nn.Linear(weight.size(1), 10)
+    new_fc.weight.data = weight[:10, :]
+    new_fc.bias.data = bias[:10]
+    resnet18.fc = new_fc
+    return resnet18
+    
+
+def nn_dynamics(n=2, m = 100):
+    # neural network dynamics with randomly generated weights
+    model = nn.Sequential(
+        nn.Linear(n, m),
+        nn.ReLU(),
+        nn.Linear(m, m),
+        nn.ReLU(),
+        nn.Linear(m, n)
+    )
+    return model
+    
 
 class Flatten(nn.Module):
     def forward(self, x):

@@ -1500,6 +1500,11 @@ class LiRPAConvNet:
                                  'ob_loss_reduction_func': loss_reduction_func,
                                  'ob_stop_criterion_func': stop_criterion_func,
                                  'ob_lr_decay': lr_decay}})
+
+        # print('\n compute bounds reached \n')
+        # lb, ub = self.net.compute_bounds(x=(x,), IBP=True, C=self.c, method='IBP+CROWN', return_A=False,
+        #                                  bound_upper=False, aux_reference_bounds=aux_reference_bounds)
+        # print('\n compute bounds finished \n')
         lb, ub = self.net.compute_bounds(x=(x,), IBP=False, C=self.c, method='CROWN-Optimized', return_A=False,
                                                  bound_upper=False, aux_reference_bounds=aux_reference_bounds)
         slope_opt = self.get_slope(self.net)[0]  # initial with one node only

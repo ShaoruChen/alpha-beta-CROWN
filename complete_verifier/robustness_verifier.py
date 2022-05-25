@@ -13,6 +13,10 @@
 #########################################################################
 """alpha-beta-CROWN verifier interface to handle robustness verification."""
 
+import sys
+# sys.path.append(r"D:\Shaoru\GithubDesk\alpha-beta-CROWN\auto_LiRPA")
+sys.path.append(r'D:\Shaoru\GithubDesk\auto_LiRPA')
+
 import os
 import re
 import socket
@@ -582,7 +586,7 @@ def main():
 
     print("final verified acc: {}%[{}]".format(verified_acc/len(bnb_ids)*100., len(bnb_ids)))
     np.save('Verified-acc_{}_{}_start{}_end{}_{}_branching_{}.npy'.
-                    format(arguments.Config['model']['name'], arguments.Config["data"]["dataset"], arguments.Config["data"]["start"], arguments.Config["data"]["end"], verified_acc, arguments.Config["bab"]["branching"]["method"]), np.array(verified_failed))
+                    format(arguments.Config['model']['name'], arguments.Config["data"]["dataset"], arguments.Config["data"]["start"], arguments.Config["data"]["end"], verified_acc, arguments.Config["bab"]["branching"]["method"]), np.array(verified_success_list))
 
     total_verification = len(verified_success_list) + len(verified_failed)
     print(f"verifier is called on {total_verification} examples.")

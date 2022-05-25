@@ -413,9 +413,10 @@ class BoundedModule(nn.Module):
 
     def _convert_nodes(self, model, global_input):
         global_input_cpu = self._to(global_input, 'cpu')
-        model.train()
+        model.eval()
         model.to('cpu')
         nodesOP, nodesIn, nodesOut, template = parse_module(model, global_input_cpu)
+        model.train()
         model.to(self.device)
         for i in range(0, len(nodesIn)):
             if nodesIn[i].param is not None:

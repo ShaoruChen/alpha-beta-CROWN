@@ -220,8 +220,10 @@ def relu_bab_parallel(net, domain, x, use_neuron_set_strategy=False, refined_low
         tot_ambi_nodes += n_unstable
 
     print(f'-----------------\n# of unstable neurons: {tot_ambi_nodes}\n-----------------\n')
-    
+
+    # original codes
     glb_record = [[time.time()-start, global_lb]]
+
     stop_condition = len(domains) > 0
     # while len(domains) > 0:
     while stop_condition:
