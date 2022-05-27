@@ -82,19 +82,6 @@ def main():
     # x0_lb = torch.tensor([[2.0, 1.0, -10 * np.pi / 180, -1.0]]).to(device)
     # x0_ub = torch.tensor([[2.2, 1.2, -6 * np.pi / 180, -0.8]]).to(device)
 
-    # example 2
-    # pre_fix = 'exp_2_lb_'
-    # x0_lb = torch.tensor([[-1.8, 0.5, 2*np.pi/180, 0.2]]).to(device)
-    # x0_ub = torch.tensor([[-1.6, 0.7, 6*np.pi/180, 0.4]]).to(device)
-
-    # example 3
-    pre_fix = 'exp_3_lb'
-    x0_lb = torch.tensor([[-0.1, -0.5, -10*np.pi/180, 0.05]]).to(device)
-    x0_ub = torch.tensor([[0.1, -0.3, -8*np.pi/180, 0.25]]).to(device)
-
-
-    x0 = (x0_lb + x0_ub) / 2
-    perturb_eps = (x0_ub - x0_lb) / 2
 
     horizon = 20
 
@@ -104,41 +91,57 @@ def main():
     model_ori = k_nn_system
     model_ori.train()
 
-    # construct LiRPANet
-    # target = 1
-    # c = torch.zeros((1, nx), device=device)
-    # # minimize -output_i
-    # c[0, target] = 1
-    # c = None
+    # example 3
+    pre_fix = 'exp_3_'
+    x0_lb = torch.tensor([[-0.1, -0.5, -10*np.pi/180, 0.05]]).to(device)
+    x0_ub = torch.tensor([[0.1, -0.3, -8*np.pi/180, 0.25]]).to(device)
 
-    arguments.Config['data']['num_outputs'] = nx
-    arguments.Config['solver']['alpha-crown']['iteration'] = 10
-    arguments.Config['bab']['timeout'] = 3000
-    arguments.Config["general"]["record_bounds"] = True
-    arguments.Config['bab']['decision_thresh'] = 10000000
+    x0 = (x0_lb + x0_ub) / 2
+    perturb_eps = (x0_ub - x0_lb) / 2
 
     # find upper bounds on all 4 outputs
     for target in tqdm(range(nx), desc='bab'):
-        l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps, lb_option= True)
+        l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps)
 
         print(f'lower bounds: {l}, upper bounds: {u}, time: {glb_record[-1][0]}')
 
-        # plt.figure()
-        # time_list = [item[0] for item in glb_record]
-        # lb_list = [item[1] for item in glb_record]
-        # plt.plot(time_list, lb_list)
-        # plt.show()
+        result = {'l': l, 'u': u, 'nodes': nodes, 'glb_record': glb_record, 'target': target}
+        torch.save(result, pre_fix + 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '_lb.pt')
+
+
+    # example 4
+    pre_fix = 'exp_4_'
+    x0_lb = torch.tensor([[1.4, 0.2, 6*np.pi/180, 0.1]]).to(device)
+    x0_ub = torch.tensor([[1.6, 0.4, 8*np.pi/180, 0.3]]).to(device)
+
+    x0 = (x0_lb + x0_ub) / 2
+    perturb_eps = (x0_ub - x0_lb) / 2
+
+    # find upper bounds on all 4 outputs
+    for target in tqdm(range(nx), desc='bab'):
+        l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps)
+
+        print(f'lower bounds: {l}, upper bounds: {u}, time: {glb_record[-1][0]}')
 
         result = {'l': l, 'u': u, 'nodes': nodes, 'glb_record': glb_record, 'target': target}
-        torch.save(result, pre_fix + 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '.pt')
+        torch.save(result, pre_fix + 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '_lb.pt')
 
+    # example 5
+    pre_fix = 'exp_5_'
+    x0_lb = torch.tensor([[-0.1, -0.2, -3*np.pi/180, -0.1]]).to(device)
+    x0_ub = torch.tensor([[0.1, 0.2, 3*np.pi/180, 0.1]]).to(device)
 
-    # find upper bound on a single output
-    # target = 0
-    # l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps)
-    # print(f'lower bounds: {l}, upper bounds: {u}, time: {glb_record[-1][0]}')
-    # result = {'l': l, 'u': u, 'nodes': nodes, 'glb_record': glb_record, 'target': target}
-    # torch.save(result, 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '_lb.pt')
+    x0 = (x0_lb + x0_ub) / 2
+    perturb_eps = (x0_ub - x0_lb) / 2
+
+    # find upper bounds on all 4 outputs
+    for target in tqdm(range(nx), desc='bab'):
+        l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps)
+
+        print(f'lower bounds: {l}, upper bounds: {u}, time: {glb_record[-1][0]}')
+
+        result = {'l': l, 'u': u, 'nodes': nodes, 'glb_record': glb_record, 'target': target}
+        torch.save(result, pre_fix + 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '_lb.pt')
 
 if __name__ == '__main__':
     config_args()

@@ -228,7 +228,7 @@ def mip(saved_bounds, y, labels_to_verify=None):
         return "unknown", -float("inf"), lower_bounds, upper_bounds
 
 
-def bab(unwrapped_model, data, target, y, eps=None, data_ub=None, data_lb=None, lower_bounds=None, upper_bounds=None, reference_slopes=None, attack_images=None):
+def bab(unwrapped_model, data, target, y, eps=None, data_ub=None, data_lb=None, lower_bounds=None, upper_bounds=None, reference_slopes=None, attack_images=None, lb_option = False):
     norm = arguments.Config["specification"]["norm"]
     if arguments.Config["specification"]["type"] == 'lp':
         if norm == np.inf:
@@ -264,7 +264,10 @@ def bab(unwrapped_model, data, target, y, eps=None, data_ub=None, data_lb=None, 
     else:
         # if there is no ture label, we only verify the target output
         c = torch.zeros((1, 1, num_outputs), device=arguments.Config["general"]["device"])  # we only support c with shape of (1, 1, n)
-        c[0, 0, target] = -1
+        if lb_option:
+            c[0, 0, target] = 1
+        else:
+            c[0, 0, target] = -1
 
     # This will use the refined bounds if the complete verifier is "bab-refine".
     model = LiRPAConvNet(unwrapped_model, y, target, device=arguments.Config["general"]["device"], in_size=data.shape,

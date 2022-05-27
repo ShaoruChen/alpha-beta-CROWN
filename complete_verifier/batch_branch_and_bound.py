@@ -269,6 +269,7 @@ def relu_bab_parallel(net, domain, x, use_neuron_set_strategy=False, refined_low
 
         if record:
             glb_record.append([time.time() - start, global_lb])
+
         print(f'Cumulative time: {time.time() - start}\n')
 
     del domains

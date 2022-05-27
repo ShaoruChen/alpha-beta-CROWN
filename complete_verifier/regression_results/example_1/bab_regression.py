@@ -79,24 +79,13 @@ def main():
     nn_system = torch.load(nn_file_name)
 
     # original test bed
-    # x0_lb = torch.tensor([[2.0, 1.0, -10 * np.pi / 180, -1.0]]).to(device)
-    # x0_ub = torch.tensor([[2.2, 1.2, -6 * np.pi / 180, -0.8]]).to(device)
-
-    # example 2
-    # pre_fix = 'exp_2_lb_'
-    # x0_lb = torch.tensor([[-1.8, 0.5, 2*np.pi/180, 0.2]]).to(device)
-    # x0_ub = torch.tensor([[-1.6, 0.7, 6*np.pi/180, 0.4]]).to(device)
-
-    # example 3
-    pre_fix = 'exp_3_lb'
-    x0_lb = torch.tensor([[-0.1, -0.5, -10*np.pi/180, 0.05]]).to(device)
-    x0_ub = torch.tensor([[0.1, -0.3, -8*np.pi/180, 0.25]]).to(device)
-
+    x0_lb = torch.tensor([[2.0, 1.0, -10 * np.pi / 180, -1.0]]).to(device)
+    x0_ub = torch.tensor([[2.2, 1.2, -6 * np.pi / 180, -0.8]]).to(device)
 
     x0 = (x0_lb + x0_ub) / 2
     perturb_eps = (x0_ub - x0_lb) / 2
 
-    horizon = 20
+    horizon = 30
 
     nn_system = torch.load(nn_file_name)
     nn_layers_list = list(nn_system) * horizon
@@ -113,13 +102,12 @@ def main():
 
     arguments.Config['data']['num_outputs'] = nx
     arguments.Config['solver']['alpha-crown']['iteration'] = 10
-    arguments.Config['bab']['timeout'] = 3000
+    arguments.Config['bab']['timeout'] = 2600
     arguments.Config["general"]["record_bounds"] = True
-    arguments.Config['bab']['decision_thresh'] = 10000000
 
     # find upper bounds on all 4 outputs
     for target in tqdm(range(nx), desc='bab'):
-        l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps, lb_option= True)
+        l, u, nodes, glb_record = bab(model_ori, x0, target, y=None, eps=perturb_eps)
 
         print(f'lower bounds: {l}, upper bounds: {u}, time: {glb_record[-1][0]}')
 
@@ -130,7 +118,7 @@ def main():
         # plt.show()
 
         result = {'l': l, 'u': u, 'nodes': nodes, 'glb_record': glb_record, 'target': target}
-        torch.save(result, pre_fix + 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '.pt')
+        torch.save(result, 'bab_result_horizon_' + str(horizon) + '_target_' + str(target) + '_lb.pt')
 
 
     # find upper bound on a single output

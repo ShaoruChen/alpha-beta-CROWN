@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0beef5ae-3735-4521-a180-6311d430dfba" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bab_regression.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../auto_LiRPA/bound_general.py" beforeDir="false" afterPath="$PROJECT_DIR$/../auto_LiRPA/bound_general.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bab_regression.py" beforeDir="false" afterPath="$PROJECT_DIR$/bab_regression.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bab_verification_general.py" beforeDir="false" afterPath="$PROJECT_DIR$/bab_verification_general.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/batch_branch_and_bound.py" beforeDir="false" afterPath="$PROJECT_DIR$/batch_branch_and_bound.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/beta_CROWN_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/beta_CROWN_solver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model_defs.py" beforeDir="false" afterPath="$PROJECT_DIR$/model_defs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/robustness_verifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/robustness_verifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp_configs/admm_cifar_large.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/exp_configs/admm_cifar_large.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/exp_configs/admm_resnet18.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/exp_configs/admm_resnet18.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +33,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Operator-Splitting-for-Verification-of-DNNs/Code/ICLR" />
     <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
   </component>
   <component name="PyConsoleOptionsProvider">
@@ -87,6 +87,27 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="bab_regression_multiple" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="complete_verifier" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bab_regression_multiple.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="robustness_verifier" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="complete_verifier" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -132,9 +153,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.bab_regression" />
+        <item itemvalue="Python.bab_regression_multiple" />
         <item itemvalue="Python.__init__" />
         <item itemvalue="Python.robustness_verifier" />
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
@@ -169,6 +190,16 @@
           <url>file://$PROJECT_DIR$/../../auto_LiRPA/auto_LiRPA/bound_general.py</url>
           <line>839</line>
           <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/batch_branch_and_bound.py</url>
+          <line>198</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/bab_regression.py</url>
+          <line>96</line>
+          <option name="timeStamp" value="56" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
